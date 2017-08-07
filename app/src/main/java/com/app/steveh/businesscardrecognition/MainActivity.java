@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
-    private Button takePictureButton;
+    private Button takePictureButton, resetButton;
     private TextView textBlockContent;
 
     private Camera mCamera;
     private CameraPreview mPreview;
+
+    private FrameLayout preview;
 
 
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
         takePictureButton = (Button) findViewById(R.id.takePictureButton);
@@ -68,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
                 mCamera.takePicture(null, null, mPicture);
             }
         });
+
+        resetButton = (Button) findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                reset();
+            }
+        });;
     }
 
 
@@ -94,7 +103,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    private void reset() {
+        mCamera = getCameraInstance();
+        mPreview = new CameraPreview(this, mCamera);
+        preview.removeAllViews();
+        preview.addView(mPreview);
+        textBlockContent.setText("");
+    }
 
     private void getText(Bitmap image) {
 
@@ -111,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage("Text recognizer could not be set up on your device :(").show();
                 return;
             }
-            Frame frame = new Frame.Builder().setBitmap(bitmap).build(); //TODO change "bitmap" to "image" to use the picture taken by the camera
+            Frame frame = new Frame.Builder().setBitmap(image).build(); //TODO change "bitmap" to "image" to use the picture taken by the camera
             SparseArray<TextBlock> text = textRecognizer.detect(frame);
             String detectedText = "";
 
@@ -154,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
+
 
 
 }

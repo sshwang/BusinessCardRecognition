@@ -39,10 +39,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Take Picture"
+            android:layout_alignBaseline="@+id/resetButton"
+            android:layout_alignBottom="@+id/resetButton"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:layout_marginBottom="44dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="43dp" />
-
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 </LinearLayout>
